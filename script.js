@@ -15,7 +15,7 @@ function main() {
   getPctrs();
   drawPctrs();
   getText();
-
+  drawText();
 }
 
 function generateHTML() {
@@ -134,3 +134,44 @@ function getText() {
   }
 }
 
+function formateStrings(context, text, x, y, maxWidth, lineHeight) {
+  var
+    words = text.split(" "),
+    countWords = words.length,
+    countRaws = Math.floor(context.measureText(text).width / 550),
+    line = "";
+
+  y -= countRaws * (lineHeight / 2);
+  for (var n = 0; n < countWords; n++) {
+    var
+      testLine = line + words[n] + " ",
+      testWidth = context.measureText(testLine).width;
+
+    if (testWidth > maxWidth) {
+      context.fillText(line, x, y);
+      line = words[n] + " ";
+      y += lineHeight;
+    }
+    else {
+      line = testLine;
+    }
+  }
+  context.fillText(line, x, y);
+}
+
+function drawText() {
+  if (quote != null && countDrawImgs == 4) {
+    var context = canvas.getContext('2d');
+
+    context.fillStyle = 'azure';
+    context.font = '22pt Segoe UI';
+    context.textAlign = 'center';
+    var x = canvas.width / 2,
+      y = canvas.height / 2 + 11;
+
+    formateStrings(context, quote, x, y, 550, 40);
+  }
+  else {
+    setTimeout(drawText, 1);
+  }
+}
