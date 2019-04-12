@@ -49,3 +49,15 @@ function generateHTML() {
   div.appendChild(download);
   body.appendChild(div);
 }
+
+function getPctrs() {
+  for (var i = 0; i < 4; i++) {
+    imgs[i] = new Image();
+    imgs[i].crossOrigin = 'anonymous';
+    a = (i + 5) * 100;
+    imgs[i].src = 'https://source.unsplash.com/' + a + 'x' + a + '/?shore';
+    imgs[i].onload = function () {
+      countLoadImgs++;
+    };
+  }
+}
