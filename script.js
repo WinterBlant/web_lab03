@@ -14,6 +14,7 @@ function main() {
   generateHTML();
   getPctrs();
   drawPctrs();
+  getText();
 
 }
 
@@ -116,6 +117,20 @@ function drawPctrs() {
     ctx.fillRect(0, 0, 600, 600);
   } else {
     setTimeout(drawPctrs, 1);
+  }
+}
+
+function getText() {
+  var http = new XMLHttpRequest;
+
+  http.open('GET', 'https://cors-anywhere.herokuapp.com/' +
+    'https://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en', true);
+  http.send();
+  http.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      console.log(http.responseText);
+      quote = JSON.parse(http.responseText)['quoteText'];
+    }
   }
 }
 
