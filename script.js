@@ -3,14 +3,14 @@ main();
 var
   quote,
   imgs,
-  countLoadImgs,
-  countDrawImgs;
+  countLoadPctrs,
+  countDrawPctrs;
 
 function main() {
   quote = null;
   imgs = new Array();
-  countLoadImgs = 0;
-  countDrawImgs = 0;
+  countLoadPctrs = 0;
+  countDrawPctrs = 0;
   generateHTML();
   getPctrs();
   drawPctrs();
@@ -64,7 +64,7 @@ function getPctrs() {
     a = (i + 5) * 100;
     imgs[i].src = 'https://source.unsplash.com/' + a + 'x' + a + '/?mountain';
     imgs[i].onload = function () {
-      countLoadImgs++;
+      countLoadPctrs++;
     };
   }
 }
@@ -73,7 +73,7 @@ function drawPctr(img, sx, sy, swidth, sheight, x, y, width, height) {
   var ctx = canvas.getContext('2d');
 
   ctx.drawImage(img, sx, sy, swidth, sheight, x, y, width, height);
-  countDrawImgs++;
+  countDrawPctrs++;
 }
 
 function calcCoords(img, width, height) {
@@ -89,7 +89,7 @@ function calcCoords(img, width, height) {
 }
 
 function drawPctrs() {
-  if (countLoadImgs == 4) {
+  if (countLoadPctrs == 4) {
     var
       x = 0,
       y = 0,
@@ -138,29 +138,29 @@ function formateStrings(context, text, x, y, maxWidth, lineHeight) {
   var
     words = text.split(" "),
     countWords = words.length,
-    countRaws = Math.floor(context.measureText(text).width / 550),
-    line = "";
+    countStrs = Math.floor(context.measureText(text).width / 550),
+    str = "";
 
-  y -= countRaws * (lineHeight / 2);
+  y -= countStrs * (lineHeight / 2);
   for (var n = 0; n < countWords; n++) {
     var
-      testLine = line + words[n] + " ",
-      testWidth = context.measureText(testLine).width;
+      tryStr = str + words[n] + " ",
+      tryWidth = context.measureText(tryStr).width;
 
-    if (testWidth > maxWidth) {
-      context.fillText(line, x, y);
-      line = words[n] + " ";
+    if (tryWidth > maxWidth) {
+      context.fillText(str, x, y);
+      str = words[n] + " ";
       y += lineHeight;
     }
     else {
-      line = testLine;
+      str = tryStr;
     }
   }
-  context.fillText(line, x, y);
+  context.fillText(str, x, y);
 }
 
 function drawText() {
-  if (quote != null && countDrawImgs == 4) {
+  if (quote != null && countDrawPctrs == 4) {
     var context = canvas.getContext('2d');
 
     context.fillStyle = 'azure';
