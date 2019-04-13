@@ -62,7 +62,7 @@ function getPctrs() {
     imgs[i] = new Image();
     imgs[i].crossOrigin = 'anonymous';
     a = (i + 5) * 100;
-    imgs[i].src = 'https://source.unsplash.com/' + a + 'x' + a + '/?shore';
+    imgs[i].src = 'https://source.unsplash.com/' + a + 'x' + a + '/?mountain';
     imgs[i].onload = function () {
       countLoadImgs++;
     };
@@ -124,7 +124,7 @@ function getText() {
   var http = new XMLHttpRequest;
 
   http.open('GET', 'https://cors-anywhere.herokuapp.com/' +
-    'https://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en', true);
+    'https://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=ru', true);
   http.send();
   http.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
